@@ -10,4 +10,8 @@
 
 @interface HWNetworkManager : NSObject
 
+- (void)cancleTaskWithURL:(NSString *)url;
+
+- (void)cancleAllTask;
+
 @end
