@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    UITableView
+    UICollectionView *collectionView = [UICollectionView new];
+    [collectionView scrollToItemAtIndexPath:[NSIndexPath new] atScrollPosition:0 animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {

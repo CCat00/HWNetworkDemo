@@ -14,7 +14,6 @@
 		68F9EC1E1C2D2F5E0020CE2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68F9EC1D1C2D2F5E0020CE2C /* Assets.xcassets */; };
 		68F9EC211C2D2F5E0020CE2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68F9EC1F1C2D2F5E0020CE2C /* LaunchScreen.storyboard */; };
 		68F9EC2D1C2D333B0020CE2C /* HWNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F9EC2C1C2D333B0020CE2C /* HWNetworkManager.m */; };
-		68F9EC301C2D335C0020CE2C /* HWNetworkDataCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F9EC2F1C2D335C0020CE2C /* HWNetworkDataCacheManager.m */; };
 		FBF458EFF0A2349B779F5249 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F333D0EA5ACF021EE901F4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +32,6 @@
 		68F9EC281C2D31800020CE2C /* HWNetworkDemo_PCH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWNetworkDemo_PCH.h; sourceTree = "<group>"; };
 		68F9EC2B1C2D333B0020CE2C /* HWNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWNetworkManager.h; sourceTree = "<group>"; };
 		68F9EC2C1C2D333B0020CE2C /* HWNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWNetworkManager.m; sourceTree = "<group>"; };
-		68F9EC2E1C2D335C0020CE2C /* HWNetworkDataCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWNetworkDataCacheManager.h; sourceTree = "<group>"; };
-		68F9EC2F1C2D335C0020CE2C /* HWNetworkDataCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWNetworkDataCacheManager.m; sourceTree = "<group>"; };
 		F063A362ED5E9F286F6C0EC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F5EE83472699A9510F5AB7DC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,8 +106,6 @@
 			children = (
 				68F9EC2B1C2D333B0020CE2C /* HWNetworkManager.h */,
 				68F9EC2C1C2D333B0020CE2C /* HWNetworkManager.m */,
-				68F9EC2E1C2D335C0020CE2C /* HWNetworkDataCacheManager.h */,
-				68F9EC2F1C2D335C0020CE2C /* HWNetworkDataCacheManager.m */,
 			);
 			path = HWNetwork;
 			sourceTree = "<group>";
@@ -232,7 +227,6 @@
 				68F9EC2D1C2D333B0020CE2C /* HWNetworkManager.m in Sources */,
 				68F9EC161C2D2F5E0020CE2C /* AppDelegate.m in Sources */,
 				68F9EC131C2D2F5E0020CE2C /* main.m in Sources */,
-				68F9EC301C2D335C0020CE2C /* HWNetworkDataCacheManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
