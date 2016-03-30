@@ -259,8 +259,9 @@
 {
     NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     NSString *path = [cachesPath stringByAppendingPathComponent:@"HWNetworkCache"];
-    [path stringByAppendingPathComponent:cacheName];
     [self checkFilePath:path];
+    path = [path stringByAppendingPathComponent:cacheName];
+    DEBUGLog(@"cache path == %@",path);
     return path;
 }
 
