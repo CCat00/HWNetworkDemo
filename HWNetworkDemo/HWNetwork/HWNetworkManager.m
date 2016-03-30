@@ -49,6 +49,7 @@
 
 @implementation HWNetworkManager
 
+#pragma mark - Init
 + (HWNetworkManager *)sharedManager
 {
     static HWNetworkManager *manager;
@@ -68,6 +69,7 @@
     return self;
 }
 
+#pragma mark - public
 //开始请求
 - (void)sendRequest:(NSString *)url
       requestMethod:(RequestMethod)method
@@ -81,23 +83,21 @@
     NSURLSessionTask *task = self.tasks[key];
     if (task && task.state == NSURLSessionTaskStateRunning) {
         
-        NSLog(@"这个任务正在执行");
+        DEBUGLog(@"这个任务正在执行");
         return;
     }
-    
-    NSString *pxURL = [NSString stringWithFormat:@"%@%@",_baseURL,url];
-    
+        
     //开启菊花
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     switch (method) {
         case RequestMethodGET:
         {
-            task = [self.sessionManager GET:pxURL parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
+            task = [self.sessionManager GET:url parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
-                [self handleRequestResult:method url:url needLoadCache:isLoadCache result:responseObject error:nil requestSucceedBlk:requestFaildBlk requestFaildBlk:nil];
+                [self handleRequestResult:method url:url needLoadCache:isLoadCache result:responseObject error:nil requestSucceedBlk:requestSucceedBlk requestFaildBlk:nil];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
@@ -108,11 +108,11 @@
             
         case RequestMethodPOST:
         {
-            task = [self.sessionManager POST:pxURL parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
+            task = [self.sessionManager POST:url parameters:para progress:^(NSProgress * _Nonnull downloadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
-               [self handleRequestResult:method url:url needLoadCache:isLoadCache result:responseObject error:nil requestSucceedBlk:requestFaildBlk requestFaildBlk:nil];
+               [self handleRequestResult:method url:url needLoadCache:isLoadCache result:responseObject error:nil requestSucceedBlk:requestSucceedBlk requestFaildBlk:nil];
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
@@ -178,10 +178,16 @@
         if (isLoadCach) {
             id cacheData = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
             if (cacheData) {
+                DEBUGLog(@"---------缓存数据---------");
                 requestSuccedBlk(cacheData);
             }
+            else {
+                requestFaildBlk(error);
+            }
         }
-        requestFaildBlk(error);
+        else {
+            requestFaildBlk(error);
+        }
     }
     
     [self removeTask:url];
@@ -206,6 +212,8 @@
       
         [task cancel];
     }];
+    //
+    [self.sessionManager.operationQueue cancelAllOperations];
 }
 
 
@@ -221,7 +229,7 @@
             __autoreleasing NSError *error = nil;
             [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
             if (error) {
-                NSLog(@"remove file failed. error == %@", error);
+                DEBUGLog(@"remove file failed. error == %@", error);
             }
             [self createFilePath:path];
         }
@@ -236,13 +244,13 @@
                                                attributes:nil
                                                     error:&error];
     if (error) {
-        NSLog(@"create filePath failed. error == %@", error);
+        DEBUGLog(@"create filePath failed. error == %@", error);
     }
 }
 
 - (NSString *)cacheFileName:(RequestMethod)requestMethod url:(NSString *)url
 {
-    NSString *requestInfo = [NSString stringWithFormat:@"Method:%ld Host:%@ Url:%@ AppVersion:%@", (long)requestMethod, _baseURL, url, [HWUtils appVersionString]];
+    NSString *requestInfo = [NSString stringWithFormat:@"Method:%ld Host:%@ Url:%@ AppVersion:%@", (long)requestMethod, kWebBaseURLString, url, [HWUtils appVersionString]];
     NSString *cacheFileName = [HWUtils md5StringFromString:requestInfo];
     return cacheFileName;
 }
@@ -256,18 +264,17 @@
     return path;
 }
 
-//- (void)cacheResponseToFile:(id)response
-//{
-//    if (response) {
-////        [NSKeyedArchiver archiveRootObject:response toFile:[self cacheFilePath]];
-//    }
-//}
+
+#pragma mark - setter
+
 
 #pragma mark - getter
 - (AFHTTPSessionManager *)sessionManager
 {
     if (!_sessionManager) {
-        _sessionManager = [AFHTTPSessionManager manager];
+        _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:kWebBaseURLString]];
+        _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", @"text/json", @"text/javescript", @"text/html", @"iamge/jpeg", @"image/png", nil];
+        _sessionManager.requestSerializer.timeoutInterval = kWebRequestTimeOut;
     }
     return _sessionManager;
 }

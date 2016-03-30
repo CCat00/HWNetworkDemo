@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HWNetworkDefine.h"
 
 typedef NS_ENUM(NSInteger, RequestMethod) {
     RequestMethodGET = 0,
     RequestMethodPOST,
-    RequestMethodHEAD,
-    RequestMethodPUT,
-    RequestMethodDELETE,
-    RequestMethodPATCH
+//    RequestMethodHEAD,
+//    RequestMethodPUT,
+//    RequestMethodDELETE,
+//    RequestMethodPATCH
 };
 
 
@@ -32,11 +33,18 @@ typedef void(^RequestFaildBlk)(NSError *error);
 
 @interface HWNetworkManager : NSObject
 
-@property (nonatomic, strong) NSString *baseURL;
+//@property (readonly, nonatomic, strong) NSString *baseURL;
 //@property (nonatomic, copy) RequestSucceedBlk requestSucceedBlk;
 //@property (nonatomic, copy) RequestFaildBlk requestFaildBlk;
 
 + (HWNetworkManager *)sharedManager;
+
+- (void)sendRequest:(NSString *)url
+      requestMethod:(RequestMethod)method
+         parameters:(id)para
+      needLoadCache:(BOOL)isLoadCache
+  requestSucceedBlk:(RequestSucceedBlk)requestSucceedBlk
+    requestFaildBlk:(RequestFaildBlk)requestFaildBlk;
 
 - (void)cancleTaskWithURL:(NSString *)url;
 

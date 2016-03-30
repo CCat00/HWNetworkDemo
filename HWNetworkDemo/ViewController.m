@@ -7,6 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "HWNetworkManager.h"
+
+#define HWNetworkManager [HWNetworkManager sharedManager]
 
 @interface ViewController ()
 
@@ -17,9 +20,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//    UITableView
-    UICollectionView *collectionView = [UICollectionView new];
-    [collectionView scrollToItemAtIndexPath:[NSIndexPath new] atScrollPosition:0 animated:NO];
+    
+    [self test1];
+}
+
+- (void)test1
+{
+    [HWNetworkManager sendRequest:@"/v2/music/search"
+                    requestMethod:RequestMethodPOST
+                       parameters:@{@"q":@"周杰伦"}
+                    needLoadCache:YES
+                requestSucceedBlk:^(id result) {
+                    
+                    DEBUGLog(@"result == %@",result);
+                    
+                } requestFaildBlk:^(NSError *error) {
+                    
+                    DEBUGLog(@"error == %@", error);
+                }];
 }
 
 - (void)didReceiveMemoryWarning {
