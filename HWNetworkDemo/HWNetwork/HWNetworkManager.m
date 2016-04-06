@@ -8,7 +8,10 @@
 
 #import "HWNetworkManager.h"
 #import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+
 #import <CommonCrypto/CommonCrypto.h>
+
 @implementation HWUtils
 
 + (NSString *)md5StringFromString:(NSString *)string {
@@ -30,6 +33,15 @@
 
 + (NSString *)appVersionString {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
++ (NSString *)dateString {
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    NSString *string = [dateFormatter stringFromDate:date];
+    DEBUGLog(@"string == %@", string);
+    return string;
 }
 
 
@@ -125,6 +137,62 @@
     }
     
     [self addTask:task url:url];
+}
+
+- (void)uploadPicRequest:(NSString *)url
+                fileData:(NSData *)data
+              parameters:(id)para
+             progressBlk:(void(^)(NSProgress *uploadPro))progressBlk
+           requestSucceedBlk:(RequestSucceedBlk)requestSucceedBlk
+             requestFaildBlk:(RequestFaildBlk)requestFaildBlk
+{
+    
+    NSString *key = [self sessionTaskHashKey:url];
+    NSURLSessionTask *task = self.tasks[key];
+    if (task && task.state == NSURLSessionTaskStateRunning) {
+        DEBUGLog(@"这个任务正在执行");
+        return;
+    }
+    
+    NSString *name = [HWUtils md5StringFromString:[HWUtils dateString]];
+    NSString *fileName = [NSString stringWithFormat:@"%@.png", name];
+    
+    //开启菊花
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    [self.sessionManager POST:url
+                   parameters:para
+    constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        [formData appendPartWithFileData:data name:name fileName:fileName mimeType:@"img/png"];
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        progressBlk(uploadProgress);
+        
+//        uploadPro = *uploadProgress;
+//        [SVProgressHUD showProgress:uploadProgress.totalUnitCount];
+//        DEBUGLog(@"%lld,= == = %f",uploadProgress.totalUnitCount, uploadProgress.fractionCompleted);
+//        [SVProgressHUD showProgress:uploadProgress.fractionCompleted status:[NSString stringWithFormat:@"%.1f%%",uploadProgress.fractionCompleted * 100]];
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+//        [SVProgressHUD dismiss];
+        requestSucceedBlk(responseObject);
+        
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+//        [SVProgressHUD dismiss];
+        requestFaildBlk(error);
+        
+    }];
+    
+    [self removeTask:url];
+    //关闭菊花
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
 }
 
 
@@ -275,6 +343,11 @@
     if (!_sessionManager) {
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:kWebBaseURLString]];
         _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", @"text/json", @"text/javescript", @"text/html", @"iamge/jpeg", @"image/png", nil];
+        
+        _sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        
+        _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
         _sessionManager.requestSerializer.timeoutInterval = kWebRequestTimeOut;
     }
     return _sessionManager;

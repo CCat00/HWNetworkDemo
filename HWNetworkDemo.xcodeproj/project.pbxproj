@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		687B9BC71CB4F96000B04E4D /* 4ac2269a1e4513f4ea767795ccd43033.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 687B9BC61CB4F96000B04E4D /* 4ac2269a1e4513f4ea767795ccd43033.jpg */; };
+		687B9BC91CB4FA3A00B04E4D /* 4da313154aa2c2c21bc5e5ff1db0faf1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 687B9BC81CB4FA3A00B04E4D /* 4da313154aa2c2c21bc5e5ff1db0faf1.jpg */; };
 		68F9EC131C2D2F5E0020CE2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F9EC121C2D2F5E0020CE2C /* main.m */; };
 		68F9EC161C2D2F5E0020CE2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F9EC151C2D2F5E0020CE2C /* AppDelegate.m */; };
 		68F9EC191C2D2F5E0020CE2C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F9EC181C2D2F5E0020CE2C /* ViewController.m */; };
@@ -20,6 +22,8 @@
 /* Begin PBXFileReference section */
 		57F333D0EA5ACF021EE901F4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6801DACB1CAB767A00CB6A61 /* HWNetworkDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWNetworkDefine.h; sourceTree = "<group>"; };
+		687B9BC61CB4F96000B04E4D /* 4ac2269a1e4513f4ea767795ccd43033.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4ac2269a1e4513f4ea767795ccd43033.jpg; sourceTree = "<group>"; };
+		687B9BC81CB4FA3A00B04E4D /* 4da313154aa2c2c21bc5e5ff1db0faf1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4da313154aa2c2c21bc5e5ff1db0faf1.jpg; sourceTree = "<group>"; };
 		68F9EC0E1C2D2F5E0020CE2C /* HWNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HWNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F9EC121C2D2F5E0020CE2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		68F9EC141C2D2F5E0020CE2C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		68F9EC101C2D2F5E0020CE2C /* HWNetworkDemo */ = {
 			isa = PBXGroup;
 			children = (
+				687B9BC81CB4FA3A00B04E4D /* 4da313154aa2c2c21bc5e5ff1db0faf1.jpg */,
+				687B9BC61CB4F96000B04E4D /* 4ac2269a1e4513f4ea767795ccd43033.jpg */,
 				68F9EC2A1C2D331C0020CE2C /* HWNetwork */,
 				68F9EC141C2D2F5E0020CE2C /* AppDelegate.h */,
 				68F9EC151C2D2F5E0020CE2C /* AppDelegate.m */,
@@ -132,6 +138,7 @@
 				68F9EC0B1C2D2F5E0020CE2C /* Frameworks */,
 				68F9EC0C1C2D2F5E0020CE2C /* Resources */,
 				ABD7A45F4A8F4119C764C133 /* Copy Pods Resources */,
+				56D80BA30760149D86F3DE97 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,8 +186,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				687B9BC91CB4FA3A00B04E4D /* 4da313154aa2c2c21bc5e5ff1db0faf1.jpg in Resources */,
 				68F9EC211C2D2F5E0020CE2C /* LaunchScreen.storyboard in Resources */,
 				68F9EC1E1C2D2F5E0020CE2C /* Assets.xcassets in Resources */,
+				687B9BC71CB4F96000B04E4D /* 4ac2269a1e4513f4ea767795ccd43033.jpg in Resources */,
 				68F9EC1C1C2D2F5E0020CE2C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +210,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		56D80BA30760149D86F3DE97 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ABD7A45F4A8F4119C764C133 /* Copy Pods Resources */ = {

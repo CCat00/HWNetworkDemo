@@ -29,6 +29,8 @@ typedef void(^RequestFaildBlk)(NSError *error);
 
 + (NSString *)appVersionString;
 
++ (NSString *)dateString;
+
 @end
 
 @interface HWNetworkManager : NSObject
@@ -45,6 +47,13 @@ typedef void(^RequestFaildBlk)(NSError *error);
       needLoadCache:(BOOL)isLoadCache
   requestSucceedBlk:(RequestSucceedBlk)requestSucceedBlk
     requestFaildBlk:(RequestFaildBlk)requestFaildBlk;
+
+- (void)uploadPicRequest:(NSString *)url
+                fileData:(NSData *)data
+              parameters:(id)para
+             progressBlk:(void(^)(NSProgress *uploadPro))progressBlk
+       requestSucceedBlk:(RequestSucceedBlk)requestSucceedBlk
+         requestFaildBlk:(RequestFaildBlk)requestFaildBlk;
 
 - (void)cancleTaskWithURL:(NSString *)url;
 
